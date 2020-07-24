@@ -26,10 +26,8 @@ public class SocketRequestSender implements RequestSender, JsonDeserializer<Map<
 
     @Override
     public Response sendRequest(Request request) {
-        System.out.println(toJson(request));
         printStream.println(toJson(request));
         String json = scanner.nextLine();
-        System.out.println(json);
         Response response = toResponse(json);
         if (request instanceof Logout) {
             scanner.close();
