@@ -22,7 +22,7 @@ public class LoginPanel extends JPanel {
     private final Dimension dimension;
     private final LoginPanelAction loginPanelAction;
 
-    public LoginPanel(LoginPanelAction loginPanelAction, Config config) {
+    public LoginPanel(Config config, LoginPanelAction loginPanelAction) {
         super();
         config(config);
         dimension = new Dimension(componentWidth, componentHeight);

@@ -8,4 +8,16 @@ public class MainMenuAction {
     public MainMenuAction(MainController mainController) {
         this.mainController = mainController;
     }
+
+    public void startGame() {
+        mainController.sendStartGame();
+    }
+
+    public void replay() {
+        mainController.startReplay();
+    }
+
+    public void exit(){
+        mainController.logout();
+    }
 }

@@ -11,6 +11,9 @@ import java.util.Optional;
 import java.util.Properties;
 
 public class Config extends Properties {
+    public Config(){
+    }
+
     public Config(String address) {
         try {
             Reader fileReader = new FileReader(address);

@@ -1,5 +1,7 @@
 package ir.sam.XO.client.view.panel;
 
+import ir.sam.XO.client.controller.actions.MainMenuAction;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
@@ -9,13 +11,16 @@ public class DownPanel extends JPanel {
     private final JButton playGame,replay, exit;
     private final Dimension dimension;
 
-    public DownPanel(Dimension dimension) {
+    public DownPanel(Dimension dimension,MainMenuAction mainMenuAction) {
         setOpaque(false);
         this.dimension = dimension;
         name = new JLabel();
         playGame = new JButton("play");
+        playGame.addActionListener(e -> mainMenuAction.startGame());
         replay = new JButton("replay");
+        replay.addActionListener(e -> mainMenuAction.replay());
         exit = new JButton("exit");
+        exit.addActionListener(e -> mainMenuAction.exit());
         init();
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         add(name);

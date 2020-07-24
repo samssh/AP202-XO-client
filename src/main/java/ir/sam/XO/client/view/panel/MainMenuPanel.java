@@ -13,24 +13,21 @@ import java.util.Vector;
 
 public class MainMenuPanel extends JPanel {
     private final JScrollPane scrollPane;
-    private final JTable table;
     private final MyModel model;
     private final DownPanel downPanel;
-    private final Object[] columnNames = {"username", "score", "state"};
-    private final MainMenuAction mainMenuAction;
     private int componentWidth, componentHeight;
     private int tableWidth, tableHeight;
 
     public MainMenuPanel(Config config, MainMenuAction mainMenuAction) {
         config(config);
-        this.mainMenuAction = mainMenuAction;
-        model = new MyModel(columnNames,columnNames.length);
-        table = new JTable(model);
+        Object[] columnNames = {"username", "score", "state"};
+        model = new MyModel(columnNames, columnNames.length);
+        JTable table = new JTable(model);
         scrollPane = new JScrollPane(table);
         initTable();
         this.add(scrollPane);
         Dimension dimension = new Dimension(componentWidth, componentHeight);
-        downPanel = new DownPanel(dimension);
+        downPanel = new DownPanel(dimension,mainMenuAction);
         downPanel.setBounds(0,tableHeight,tableWidth,getHeight()-tableHeight);
         this.add(downPanel);
     }
@@ -58,12 +55,12 @@ public class MainMenuPanel extends JPanel {
     private void config(Config config) {
         setBounds(0, 0,
                 config.getProperty(Integer.class, "width").orElse(350),
-                config.getProperty(Integer.class, "height").orElse(450));
+                config.getProperty(Integer.class, "height").orElse(550));
         tableWidth = config.getProperty(Integer.class, "tableWidth").orElse(350);
         tableHeight = config.getProperty(Integer.class, "tableHeight").orElse(200);
         setPreferredSize(new Dimension(config.getProperty(Integer.class, "width")
                 .orElse(350), config.getProperty(Integer.class, "height")
-                .orElse(450)));
+                .orElse(550)));
         componentWidth = config.getProperty(Integer.class, "componentWidth")
                 .orElse(200);
         componentHeight = config.getProperty(Integer.class, "componentHeight")
