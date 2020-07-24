@@ -49,7 +49,6 @@ public class MainMenuPanel extends JPanel {
             vectors.add(new Vector<>(Arrays.asList(map.get("username"), map.get("score"), map.get("state"))));
         }
         model.removeAllAndAddAll(vectors);
-        System.out.println(model.getRowCount());
     }
 
     private void config(Config config) {

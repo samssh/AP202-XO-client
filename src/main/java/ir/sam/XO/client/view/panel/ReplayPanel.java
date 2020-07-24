@@ -24,7 +24,7 @@ public class ReplayPanel extends AbstractPanel {
         index = 1;
         next = new JButton("next");
         int w = width, h = height;
-        next.setBounds(150 * w / 350, 400 * h / 550, 50 * w / 350, 30 * h / 550);
+        next.setBounds(100 * w / 350, 400 * h / 550, 150 * w / 350, 30 * h / 550);
         next.addActionListener(e -> this.next());
         this.add(next);
     }
