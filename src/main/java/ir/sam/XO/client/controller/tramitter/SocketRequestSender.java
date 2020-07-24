@@ -1,6 +1,7 @@
 package ir.sam.XO.client.controller.tramitter;
 
 import com.google.gson.*;
+import ir.sam.XO.client.controller.request.Logout;
 import ir.sam.XO.client.controller.request.Request;
 import ir.sam.XO.client.controller.response.LoginResponse;
 import ir.sam.XO.client.controller.response.Response;
@@ -19,18 +20,23 @@ public class SocketRequestSender implements RequestSender, JsonDeserializer<Map<
     private String token;
 
     public SocketRequestSender(Socket socket) throws IOException {
-        printStream = new PrintStream(socket.getOutputStream());
         scanner = new Scanner(socket.getInputStream());
+        printStream = new PrintStream(socket.getOutputStream(),true);
     }
 
     @Override
     public Response sendRequest(Request request) {
         System.out.println(toJson(request));
         printStream.println(toJson(request));
-        printStream.flush();
         String json = scanner.nextLine();
         System.out.println(json);
-        return toResponse(json);
+        Response response = toResponse(json);
+        if (request instanceof Logout) {
+            scanner.close();
+            printStream.close();
+            System.exit(0);
+        }
+        return response;
     }
 
     private String toJson(Request request) {

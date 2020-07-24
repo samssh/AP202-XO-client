@@ -3,10 +3,7 @@ package ir.sam.XO.client.controller;
 import ir.sam.XO.client.controller.actions.LoginPanelAction;
 import ir.sam.XO.client.controller.actions.MainMenuAction;
 import ir.sam.XO.client.controller.actions.PlayPanelAction;
-import ir.sam.XO.client.controller.request.Logout;
-import ir.sam.XO.client.controller.request.PlayDetails;
-import ir.sam.XO.client.controller.request.Request;
-import ir.sam.XO.client.controller.request.ScoreBoard;
+import ir.sam.XO.client.controller.request.*;
 import ir.sam.XO.client.controller.response.Response;
 import ir.sam.XO.client.controller.tramitter.RequestSender;
 import ir.sam.XO.client.view.panel.PlayPanel;
@@ -97,6 +94,7 @@ public class MainController implements ResponseVisitor {
     public void sendStartGame() {
         events.clear();
         ((PlayPanel) panels.get(PLAY)).reset();
+        sendRequest(new StartGame());
     }
 
     @Override
@@ -150,14 +148,13 @@ public class MainController implements ResponseVisitor {
         updateFrame();
     }
 
-    public void endReplay(){
+    public void endReplay() {
         now = MAIN_MENU;
         updateFrame();
     }
 
-    public void logout(){
+    public void logout() {
         updater.stop();
-        executor.stop();
         sendRequest(new Logout());
     }
 }
