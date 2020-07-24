@@ -1,5 +1,7 @@
 package controller.response;
 
+import controller.ResponseVisitor;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -12,5 +14,10 @@ public class ScoreBoard extends Response {
         super(map);
         this.players = (ArrayList<Map<String, Object>>) map.get("players");
         this.currentPlayer = (Map<String, Object>) map.get("currentPlayer");
+    }
+
+    @Override
+    public void execute(ResponseVisitor responseVisitor) {
+        responseVisitor.setScoreBoard(players,currentPlayer);
     }
 }

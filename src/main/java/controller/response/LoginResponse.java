@@ -1,5 +1,6 @@
 package controller.response;
 
+import controller.ResponseVisitor;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -14,5 +15,10 @@ public class LoginResponse extends Response {
         super(map);
         this.success = (boolean) map.get("success");
         this.message = (String) map.get("message");
+    }
+
+    @Override
+    public void execute(ResponseVisitor responseVisitor) {
+        responseVisitor.login(success,message);
     }
 }

@@ -1,13 +1,14 @@
 package controller.actions;
 
 import controller.MainController;
+import controller.request.Login;
 import view.panel.LoginPanel;
 
 public class LoginPanelAction {
-    private final MainController client;
+    private final MainController mainController;
 
-    public LoginPanelAction(MainController client) {
-        this.client = client;
+    public LoginPanelAction(MainController mainController) {
+        this.mainController = mainController;
     }
 
     public void changeMode(LoginPanel loginPanel) {
@@ -28,7 +29,7 @@ public class LoginPanelAction {
         }
         if ("Enter password".equals(pass))
             return;
-//        client.sendLoginRequest(username, pass, loginPanel.getMode().getValue());
+        mainController.sendRequest(new Login(username,pass,loginPanel.getMode().getValue()));
     }
 
 }

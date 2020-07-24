@@ -18,23 +18,44 @@ public class LoginPanel extends JPanel {
     private JTextField userName;
     private JPasswordField password, passwordAgain;
     private JButton login, changeMode;
-    private int componentWidth, componentHeight, componentSpace;
+    private int componentWidth, componentHeight;
     private final Dimension dimension;
     private final LoginPanelAction loginPanelAction;
 
     public LoginPanel(LoginPanelAction loginPanelAction, Config config) {
-        setLayout(null);
+        super();
         config(config);
         dimension = new Dimension(componentWidth, componentHeight);
         initialize();
         this.loginPanelAction = loginPanelAction;
         mode = Mode.SIGN_IN;
-        this.add(welcome);
-        this.add(userName);
-        this.add(password);
-        this.add(passwordAgain);
-        this.add(login);
-        this.add(changeMode);
+        GridBagLayout grid = new GridBagLayout();
+        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(grid);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(welcome, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.add(userName, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        this.add(password, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        this.add(passwordAgain, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        this.add(login, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        this.add(changeMode, gbc);
     }
 
     private void initialize() {
@@ -47,31 +68,31 @@ public class LoginPanel extends JPanel {
 
     private void initializeWelcome() {
         welcome = new JLabel("welcome", SwingConstants.CENTER);
+        welcome.setPreferredSize(dimension);
         welcome.setSize(dimension);
         welcome.setForeground(Color.RED);
-//        Constant.makeWhite(welcome);
     }
 
     private void initializeLoginB() {
         login = new JButton();
+        login.setPreferredSize(dimension);
         login.setSize(dimension);
         login.addActionListener(actionListener -> loginPanelAction.login(
-                this,userName.getText(),String.valueOf(password.getPassword())
-                ,String.valueOf(passwordAgain.getPassword())));
-//        Constant.makeTransparent(login);
+                this, userName.getText(), String.valueOf(password.getPassword())
+                , String.valueOf(passwordAgain.getPassword())));
     }
-
 
 
     private void initializeChangeMode() {
         changeMode = new JButton();
+        changeMode.setPreferredSize(dimension);
         changeMode.setSize(dimension);
         changeMode.addActionListener(actionEvent -> loginPanelAction.changeMode(this));
-//        Constant.makeTransparent(changeMode);
     }
 
     private void initializeUsername() {
         userName = new JTextField("Enter username");
+        userName.setPreferredSize(dimension);
         userName.setSize(dimension);
         userName.addFocusListener(new FocusListener() {
             @Override
@@ -88,15 +109,16 @@ public class LoginPanel extends JPanel {
                 }
             }
         });
-//        Constant.makeWhite(userName);
     }
 
     private void initializePasswords() {
         password = new JPasswordField();
+        password.setPreferredSize(dimension);
         password.setSize(dimension);
         initializePass(password);
         passwordAgain = new JPasswordField();
         passwordAgain.setVisible(false);
+        passwordAgain.setPreferredSize(dimension);
         passwordAgain.setSize(dimension);
         initializePass(passwordAgain);
     }
@@ -123,7 +145,6 @@ public class LoginPanel extends JPanel {
                 }
             }
         });
-//        Constant.makeWhite(password1);
     }
 
     private void resetComponents() {
@@ -152,7 +173,8 @@ public class LoginPanel extends JPanel {
         SIGN_IN(1), SIGN_UP(2);
         @Getter
         int value;
-        Mode(int value){
+
+        Mode(int value) {
             this.value = value;
         }
     }
@@ -161,35 +183,24 @@ public class LoginPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D graphics2D = (Graphics2D) g;
         super.paintComponent(graphics2D);
-        int startWidth = (this.getWidth() - componentWidth) / 2;
-        int startHeight = this.getHeight() / 2;
-        int sumHeight = componentHeight + componentSpace;
         if (mode == Mode.SIGN_IN) {
-            startHeight = startHeight - (4 * sumHeight + componentHeight) / 2;
-            login.setLocation(startWidth, startHeight + 3 * sumHeight);
-            changeMode.setLocation(startWidth, startHeight + 4 * sumHeight);
             login.setText("sign in");
             changeMode.setText("sign up");
         }
         if (mode == Mode.SIGN_UP) {
-            startHeight = startHeight - (5 * sumHeight + componentHeight) / 2;
-            passwordAgain.setLocation(startWidth, startHeight + 3 * sumHeight);
-            login.setLocation(startWidth, startHeight + 4 * sumHeight);
-            changeMode.setLocation(startWidth, startHeight + 5 * sumHeight);
             login.setText("sign up");
             changeMode.setText("sign in");
         }
-        welcome.setLocation(startWidth, startHeight);
-        userName.setLocation(startWidth, startHeight + sumHeight);
-        password.setLocation(startWidth, startHeight + 2 * sumHeight);
     }
 
     private void config(Config config) {
-        setBounds(0,0,
+        setBounds(0, 0,
                 config.getProperty(Integer.class, "width").orElse(800),
                 config.getProperty(Integer.class, "height").orElse(600));
+        setPreferredSize(new Dimension(config.getProperty(Integer.class, "width")
+                .orElse(800), config.getProperty(Integer.class, "height")
+                .orElse(600)));
         componentWidth = config.getProperty(Integer.class, "componentWidth").orElse(200);
         componentHeight = config.getProperty(Integer.class, "componentHeight").orElse(50);
-        componentSpace = config.getProperty(Integer.class, "componentSpace").orElse(20);
     }
 }

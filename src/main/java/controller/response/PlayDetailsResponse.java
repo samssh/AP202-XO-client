@@ -1,5 +1,7 @@
 package controller.response;
 
+import controller.ResponseVisitor;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -17,5 +19,10 @@ public class PlayDetailsResponse extends Response {
         message = (String) map.get("message");
         opponentUsername = (String) map.get("opponentUsername");
         board = (ArrayList<ArrayList<String>>) map.get("board");
+    }
+
+    @Override
+    public void execute(ResponseVisitor responseVisitor) {
+
     }
 }
